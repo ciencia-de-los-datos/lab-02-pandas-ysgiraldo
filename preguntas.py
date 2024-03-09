@@ -230,13 +230,6 @@ def pregunta_12():
     38   38                    eee:0,fff:9,iii:2
     39   39                    ggg:3,hhh:8,jjj:5
     """
-    # Función personalizada para unir los valores de _c5a y _c5b por ':'
-    # def join_values(group):
-    #     combined_values = group['_c5a'] + ':' + group['_c5b'].astype(str)
-    #     sorted_combined = sorted(combined_values)
-    #     return ','.join(sorted_combined)
-
-    # Agrupar por _c0 y aplicar la función personalizada para construir la lista
     tabla = tbl2.copy()
     tabla = tabla.groupby('_c0').apply(lambda group: ','.join(sorted(group['_c5a'] + ':' + group['_c5b'].astype(str)))).reset_index(name='_c5')
 
@@ -266,26 +259,6 @@ def pregunta_13():
     #    on="_c0",
     #)
     #df13 = df13.groupby("_c1")["_c5b"].sum()  # .agg({"_c5b": "sum"})
-    # suma_13 = tbl0.merge(tbl2, on="_c0").groupby("_c1")["_c5b"].sum()
+    suma = tbl0.merge(tbl2, on="_c0").groupby("_c1")["_c5b"].sum()
     
-    return tbl0.merge(tbl2, on='_c0').groupby('_c1')['_c5b'].sum()
-
-
-# def main():
-#     pregunta_01()
-#     pregunta_02()
-#     pregunta_03()
-#     pregunta_04()
-#     pregunta_05()
-#     pregunta_06()
-#     pregunta_07()
-#     pregunta_08()
-#     pregunta_09()
-#     pregunta_10()
-#     pregunta_11()
-#     pregunta_12()
-#     pregunta_13()
-
-
-# if __name__ == "__main__":
-#     main()
+    return suma
