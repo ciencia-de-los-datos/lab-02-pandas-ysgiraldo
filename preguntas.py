@@ -22,7 +22,8 @@ def pregunta_01():
     40
 
     """
-    return
+    rows = len(tbl0)
+    return rows
 
 
 def pregunta_02():
@@ -33,7 +34,8 @@ def pregunta_02():
     4
 
     """
-    return
+    cols = len(tbl0.columns)
+    return cols
 
 
 def pregunta_03():
@@ -50,7 +52,8 @@ def pregunta_03():
     Name: _c1, dtype: int64
 
     """
-    return
+    col_c1 = tbl0.groupby('_c1').size()
+    return col_c1
 
 
 def pregunta_04():
@@ -65,7 +68,8 @@ def pregunta_04():
     E    4.785714
     Name: _c2, dtype: float64
     """
-    return
+    average = tbl0.groupby('_c1')['_c2'].mean()
+    return average
 
 
 def pregunta_05():
@@ -82,7 +86,9 @@ def pregunta_05():
     E    9
     Name: _c2, dtype: int64
     """
-    return
+    
+    maximum = tbl0.groupby('_c1')['_c2'].max()
+    return maximum    
 
 
 def pregunta_06():
@@ -94,7 +100,11 @@ def pregunta_06():
     ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 
     """
-    return
+    unique_letters = tbl1['_c4'].str.upper().unique()
+    # unique_letters = unique_letters.unique()
+    unique_list = sorted(list(unique_letters))
+    
+    return unique_list
 
 
 def pregunta_07():
@@ -110,7 +120,8 @@ def pregunta_07():
     E    67
     Name: _c2, dtype: int64
     """
-    return
+    sum = tbl0.groupby('_c1')['_c2'].sum()
+    return sum 
 
 
 def pregunta_08():
@@ -128,7 +139,9 @@ def pregunta_08():
     39   39   E    5  1998-01-26    44
 
     """
-    return
+    tbl0_2 = tbl0.copy()
+    tbl0_2.loc[:, 'suma'] = tbl0_2['_c0'] + tbl0_2['_c2']
+    return tbl0_2
 
 
 def pregunta_09():
@@ -146,7 +159,9 @@ def pregunta_09():
     39   39   E    5  1998-01-26  1998
 
     """
-    return
+    tbl0_2 = tbl0.copy()
+    tbl0_2.loc[:, 'year'] = tbl0_2['_c3'].str.split('-').str[0]
+    return tbl0_2
 
 
 def pregunta_10():
@@ -163,7 +178,17 @@ def pregunta_10():
     3   D                  1:2:3:5:5:7
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
-    return
+    # tabla = tbl0.groupby('_c1').agg({'_c2': lambda x: ':'.join(map(str, x))}).reset_index()
+    # tabla.columns = ['_c1', '_c2']
+    #     # Función personalizada para construir la cadena con ':' separando los valores
+    # def join_values(values):
+    #     return ':'.join(str(v) for v in sorted(values))
+
+    # # Agrupar por _c1 y aplicar la función personalizada para construir la lista separada por ':'
+    # tabla = tbl0.groupby('_c1')['_c2'].agg(join_values).reset_index()
+    tabla = tbl0.groupby('_c1')['_c2'].agg(lambda values: ':'.join(str(v) for v in sorted(values))).reset_index().set_index('_c1')
+
+    return tabla
 
 
 def pregunta_11():
@@ -182,8 +207,13 @@ def pregunta_11():
     38   38      d,e
     39   39    a,d,f
     """
-    return
+    # def join_values(values):
+    #     return ','.join(str(v) for v in sorted(values))
+    # Agrupar por _c1 y aplicar la función personalizada para construir la lista separada por ':'
+    tabla= tbl1.copy()
+    tabla = tabla.groupby('_c0')['_c4'].agg(lambda values: ','.join(str(v) for v in sorted(values))).reset_index()
 
+    return tabla
 
 def pregunta_12():
     """
@@ -200,7 +230,17 @@ def pregunta_12():
     38   38                    eee:0,fff:9,iii:2
     39   39                    ggg:3,hhh:8,jjj:5
     """
-    return
+    # Función personalizada para unir los valores de _c5a y _c5b por ':'
+    # def join_values(group):
+    #     combined_values = group['_c5a'] + ':' + group['_c5b'].astype(str)
+    #     sorted_combined = sorted(combined_values)
+    #     return ','.join(sorted_combined)
+
+    # Agrupar por _c0 y aplicar la función personalizada para construir la lista
+    tabla = tbl2.copy()
+    tabla = tabla.groupby('_c0').apply(lambda group: ','.join(sorted(group['_c5a'] + ':' + group['_c5b'].astype(str)))).reset_index(name='_c5')
+
+    return tabla
 
 
 def pregunta_13():
@@ -217,4 +257,22 @@ def pregunta_13():
     E    275
     Name: _c5b, dtype: int64
     """
-    return
+    tabla = pd.merge(tbl0, tbl2, on = '_c0')
+    sum = tabla.groupby('_c1')['_c5b'].sum()
+    return sum
+
+
+# df = pregunta_01(tbl0)
+# df = pregunta_02(tbl0)
+# df = pregunta_03(tbl0)
+# df = pregunta_04(tbl0)
+# df = pregunta_05(tbl0)
+# df = pregunta_06(tbl1)
+# df = pregunta_07(tbl0)
+# df = pregunta_08(tbl0)
+# df = pregunta_09(tbl0)
+# df = pregunta_10(tbl0)
+# # df = pregunta_11(tbl1)
+# # df = pregunta_12(tbl2)
+# # df = pregunta_13(tbl0, tbl2)
+# print(df)
