@@ -257,21 +257,35 @@ def pregunta_13():
     E    275
     Name: _c5b, dtype: int64
     """
-    tabla = tbl0.merge(tbl2, on = '_c0').groupby('_c1')['_c5b'].sum()
-    return tabla
+
+    #df13_0 = tbl0.copy()
+    #df13_2 = tbl2.copy()
+    #df13 = pd.merge(
+    #    df13_0,
+    #    df13_2,
+    #    on="_c0",
+    #)
+    #df13 = df13.groupby("_c1")["_c5b"].sum()  # .agg({"_c5b": "sum"})
+    # suma_13 = tbl0.merge(tbl2, on="_c0").groupby("_c1")["_c5b"].sum()
+    
+    return tbl0.merge(tbl2, on='_c0').groupby('_c1')['_c5b'].sum()
 
 
-# df = pregunta_01(tbl0)
-# df = pregunta_02(tbl0)
-# df = pregunta_03(tbl0)
-# df = pregunta_04(tbl0)
-# df = pregunta_05(tbl0)
-# df = pregunta_06(tbl1)
-# df = pregunta_07(tbl0)
-# df = pregunta_08(tbl0)
-# df = pregunta_09(tbl0)
-# df = pregunta_10(tbl0)
-# # df = pregunta_11(tbl1)
-# # df = pregunta_12(tbl2)
-# df = pregunta_13(tbl0, tbl2)
-# print(df)
+# def main():
+#     pregunta_01()
+#     pregunta_02()
+#     pregunta_03()
+#     pregunta_04()
+#     pregunta_05()
+#     pregunta_06()
+#     pregunta_07()
+#     pregunta_08()
+#     pregunta_09()
+#     pregunta_10()
+#     pregunta_11()
+#     pregunta_12()
+#     pregunta_13()
+
+
+# if __name__ == "__main__":
+#     main()
