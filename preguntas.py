@@ -257,9 +257,8 @@ def pregunta_13():
     E    275
     Name: _c5b, dtype: int64
     """
-    tabla = pd.merge(tbl0, tbl2, on = '_c0')
-    sum = tabla.groupby('_c1')['_c5b'].sum()
-    return sum
+    tabla = tbl0.merge(tbl2, on = '_c0').groupby('_c1')['_c5b'].sum()
+    return tabla
 
 
 # df = pregunta_01(tbl0)
@@ -274,5 +273,5 @@ def pregunta_13():
 # df = pregunta_10(tbl0)
 # # df = pregunta_11(tbl1)
 # # df = pregunta_12(tbl2)
-# # df = pregunta_13(tbl0, tbl2)
+# df = pregunta_13(tbl0, tbl2)
 # print(df)
